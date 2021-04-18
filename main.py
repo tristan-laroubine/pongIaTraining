@@ -1,3 +1,4 @@
+# Project created by Lucie MORANT & Tristan LAROUBINE
 import gym
 import imageio as imageio
 import numpy as np
