@@ -49,7 +49,12 @@ def test_IA():
     obs_t, rew, done, inf = env.step(env.action_space.sample())  # take a random action
     while done is not True:
         x_data = vectorization_game_output(obs_t)
-        obs_t, rew, done, inf = env.step(model.predict(x_data))
+        x_data = np.array(x_data).flatten()
+
+        combined_frame = np.reshape(x_data, 2720)
+        action = np.array([combined_frame])[0]
+        move = np.argmax(action, axis=0)
+        obs_t, rew, done, inf = env.step(int(move / 40 % 6))
         if (rew != 0):
             print(rew)
     env.close()
@@ -68,8 +73,9 @@ def get_agent():
     return model
 
 
-needCreateRecord = False
-if needCreateRecord:
-    records_game_played_by_hand()
-else:
-    test_IA()
+if __name__ == '__main__':
+    needCreateRecord = False
+    if needCreateRecord:
+        records_game_played_by_hand()
+    else:
+        test_IA()
